@@ -4,7 +4,7 @@
 #include <Max72xxPanel.h>
 #include <time.h>
 
-int pinCS = 12; 
+int pinCS = 12 //D6; 
 int numberOfHorizontalDisplays = 4;
 int numberOfVerticalDisplays   = 1;
 char time_value[20];
@@ -12,9 +12,9 @@ char time_value[20];
 // LED Matrix Pin -> ESP8266 Pin
 // Vcc            -> 3v  (3V on NodeMCU 3V3 on WEMOS)
 // Gnd            -> Gnd (G on NodeMCU)
-// DIN            -> D7  (Same Pin for WEMOS)
-// CS             -> D6  (Same Pin for WEMOS)
-// CLK            -> D5  (Same Pin for WEMOS)
+// DIN            -> D7 GPIO13 (Same Pin for WEMOS)
+// CS             -> D6 GPIO12 (Same Pin for WEMOS)
+// CLK            -> D5 GPIO14 (Same Pin for WEMOS)
 
 Max72xxPanel matrix = Max72xxPanel(pinCS, numberOfHorizontalDisplays, numberOfVerticalDisplays);
 
