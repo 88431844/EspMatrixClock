@@ -4,7 +4,7 @@
 #include <Max72xxPanel.h>
 #include <time.h>
 
-int pinCS = 12 //D6; 
+int pinCS = 12; //D6 
 int numberOfHorizontalDisplays = 4;
 int numberOfVerticalDisplays   = 1;
 char time_value[20];
