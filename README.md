@@ -1,6 +1,6 @@
 # EspMatrixClock
 
-## 主控采用Esp12F，显示采用Max7219的LED 8*8 点阵屏（4块）
+主控采用Esp12F，显示采用Max7219的LED 8*8 点阵屏（4块）
 
 ### DONE
 - 显示时间
