@@ -4,7 +4,7 @@
 #include <Max72xxPanel.h>
 #include <time.h>
 
-int pinCS = 12; //D6 
+int pinCS = 12; //D6
 int numberOfHorizontalDisplays = 4;
 int numberOfVerticalDisplays   = 1;
 char time_value[20];
@@ -32,18 +32,18 @@ String t, h;
 
 void setup() {
   Serial.begin(115200);
- 
+
   //INSERT YOUR SSID AND PASSWORD HERE
 
-  WiFi.begin("a_luck","w0shiwifI!0");
+  WiFi.begin("a_luck", "w0shiwifI!0");
 
   //CHANGE THE POOL WITH YOUR CITY. SEARCH AT https://www.ntppool.org/zone/@
-  
+
   configTime(0 * 3600, 0, "cn.pool.ntp.org", "time.nist.gov");
-  
-//  setenv("TZ", "GMT-1BST",1);
-setenv("TZ", "CST-8", 1);
-  
+
+  //  setenv("TZ", "GMT-1BST",1);
+  setenv("TZ", "CST-8", 1);
+
   matrix.setIntensity(0); // Use a value between 0 and 15 for brightness
   matrix.setRotation(0, 1);    // The first display is position upside down
   matrix.setRotation(1, 1);    // The first display is position upside down
@@ -51,13 +51,13 @@ setenv("TZ", "CST-8", 1);
   matrix.setRotation(3, 1);    // The first display is position upside down
   matrix.fillScreen(LOW);
   matrix.write();
-  
+
   while ( WiFi.status() != WL_CONNECTED ) {
-    matrix.drawChar(2,0, 'W', HIGH,LOW,1); // H
-    matrix.drawChar(8,0, 'I', HIGH,LOW,1); // HH  
-    matrix.drawChar(14,0,'-', HIGH,LOW,1); // HH:
-    matrix.drawChar(20,0,'F', HIGH,LOW,1); // HH:M
-    matrix.drawChar(26,0,'I', HIGH,LOW,1); // HH:MM
+    matrix.drawChar(2, 0, 'W', HIGH, LOW, 1); // H
+    matrix.drawChar(8, 0, 'I', HIGH, LOW, 1); // HH
+    matrix.drawChar(14, 0, '-', HIGH, LOW, 1); // HH:
+    matrix.drawChar(20, 0, 'F', HIGH, LOW, 1); // HH:M
+    matrix.drawChar(26, 0, 'I', HIGH, LOW, 1); // HH:MM
     matrix.write(); // Send bitmap to display
     delay(250);
     matrix.fillScreen(LOW);
@@ -65,31 +65,34 @@ setenv("TZ", "CST-8", 1);
     delay(250);
   }
 }
-
 void loop() {
-  m = map(analogRead(0),0,1024,0,12);
+  Serial.print("ADC Value: ");
+  Serial.println(analogRead(A0));
+  m = map(analogRead(A0), 0, 1024, 0, 12);
+  Serial.println("analogRead：" + String(m));
   matrix.setIntensity(m);
   matrix.fillScreen(LOW);
   time_t now = time(nullptr);
   String time = String(ctime(&now));
   time.trim();
   //Serial.println(time);
-  time.substring(11,19).toCharArray(time_value, 10); 
-  matrix.drawChar(2,0, time_value[0], HIGH,LOW,1); // H
-  matrix.drawChar(8,0, time_value[1], HIGH,LOW,1); // HH  
-  matrix.drawChar(14,0,time_value[2], HIGH,LOW,1); // HH:
-  matrix.drawChar(20,0,time_value[3], HIGH,LOW,1); // HH:M
-  matrix.drawChar(26,0,time_value[4], HIGH,LOW,1); // HH:MM
+  time.substring(11, 19).toCharArray(time_value, 10);
+  matrix.drawChar(2, 0, time_value[0], HIGH, LOW, 1); // H
+  matrix.drawChar(8, 0, time_value[1], HIGH, LOW, 1); // HH
+  matrix.drawChar(14, 0, time_value[2], HIGH, LOW, 1); // HH:
+  matrix.drawChar(20, 0, time_value[3], HIGH, LOW, 1); // HH:M
+  matrix.drawChar(26, 0, time_value[4], HIGH, LOW, 1); // HH:MM
   matrix.write(); // Send bitmap to display
-       
-  delay(30000);
-      
+
+  delay(1000);
+
   matrix.fillScreen(LOW);
 
 }
 
-void display_message(String message){
-   for ( int i = 0 ; i < width * message.length() + matrix.width() - spacer; i++ ) {
+
+void display_message(String message) {
+  for ( int i = 0 ; i < width * message.length() + matrix.width() - spacer; i++ ) {
     //matrix.fillScreen(LOW);
     int letter = i / width;
     int x = (matrix.width() - 1) - i % width;
@@ -102,6 +105,6 @@ void display_message(String message){
       x -= width;
     }
     matrix.write(); // Send bitmap to display
-    delay(wait/2);
+    delay(wait / 2);
   }
 }
