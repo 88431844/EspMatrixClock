@@ -3,6 +3,10 @@
 #include <Adafruit_GFX.h>
 #include <Max72xxPanel.h>
 #include <time.h>
+#include "Button2.h"
+
+#define BUTTON_PIN  5
+Button2 button = Button2(BUTTON_PIN);
 
 int pinCS = 12; //D6
 int numberOfHorizontalDisplays = 4;
@@ -30,9 +34,28 @@ int m;
 
 String t, h;
 
+
+  void pressed(Button2& btn) {
+    Serial.println("pressed");
+}
+void released(Button2& btn) {
+    Serial.print("released: ");
+    Serial.println(btn.wasPressedFor());
+}
+void changed(Button2& btn) {
+    Serial.println("changed");
+}
+void tap(Button2& btn) {
+    Serial.println("tap");
+}
+
+
 void setup() {
   Serial.begin(115200);
 
+  button.setChangedHandler(changed);
+  button.setTapHandler(tap);
+  
   //INSERT YOUR SSID AND PASSWORD HERE
 
   WiFi.begin("a_luck", "w0shiwifI!0");
@@ -66,10 +89,9 @@ void setup() {
   }
 }
 void loop() {
-  Serial.print("ADC Value: ");
-  Serial.println(analogRead(A0));
+  button.loop();
+
   m = map(analogRead(A0), 0, 1024, 0, 12);
-  Serial.println("analogRead：" + String(m));
   matrix.setIntensity(m);
   matrix.fillScreen(LOW);
   time_t now = time(nullptr);
