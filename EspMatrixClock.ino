@@ -29,13 +29,13 @@ int width  = 5 + spacer; // The font width is 5 pixels
 
 int m;
 
-
-
-
 String t, h;
 
+//LED点阵旋转 1用于1088AS,3用于mini(788AS)
+int roate = 1;
+//int roate = 3;
 
-  void pressed(Button2& btn) {
+void pressed(Button2& btn) {
     Serial.println("pressed");
 }
 void released(Button2& btn) {
@@ -68,10 +68,10 @@ void setup() {
   setenv("TZ", "CST-8", 1);
 
   matrix.setIntensity(0); // Use a value between 0 and 15 for brightness
-  matrix.setRotation(0, 1);    // The first display is position upside down
-  matrix.setRotation(1, 1);    // The first display is position upside down
-  matrix.setRotation(2, 1);    // The first display is position upside down
-  matrix.setRotation(3, 1);    // The first display is position upside down
+  matrix.setRotation(0, roate);    // The first display is position upside down
+  matrix.setRotation(1, roate);    // The first display is position upside down
+  matrix.setRotation(2, roate);    // The first display is position upside down
+  matrix.setRotation(3, roate);    // The first display is position upside down
   matrix.fillScreen(LOW);
   matrix.write();
 
